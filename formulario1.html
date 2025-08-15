@@ -1,0 +1,920 @@
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Solicitud de Factura</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 35px;    
+      padding: 50px;
+      background: #f0fdf4;
+      color: #111801;
+      margin: 0;
+    }
+
+    h2 {
+      text-align: center;
+      color: #111801;
+    }
+    
+    fieldset {
+      border: 10px solid #4ade80;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    
+    legend {
+      font-weight: bold;
+      color: #166534;
+      padding: 0 10px;
+    }
+    
+    section {
+      background: #EBF9EB;
+      padding: 13px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      font-size: 1em;
+      background: #f0fdf4;
+      box-sizing: border-box;
+    }
+      
+      .vacio {
+      background-color: #F7F7F7;
+    }
+      
+      .lleno {
+    background-color: #d1fae5; 
+  }
+
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #22c55e;
+      box-shadow: 0 0 5px #4ade80;
+      background: #ecfdf5;
+    }
+      
+    
+
+    button {
+      background-color: #22c55e;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 62px;
+    }
+
+    button:hover {
+      background-color: #15803d;
+    }
+
+    .factura {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .factura table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.95em;
+    }
+
+    .factura th, .factura td {
+      border: 1px solid #093E17;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .factura th {
+      background-color: #bbf7d0;
+      color: #064e3b;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #065f46;
+    }
+      
+  
+      
+     /* Responsive */
+    @media screen and (max-width: 767px) {
+      body {
+        padding: 20px;
+      }
+      form, .factura {
+        padding: 20px;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+      input, select, button {
+        font-size: 0.95em;
+        padding: 10px;
+      }
+      .factura table {
+        font-size: 0.85em;
+      }
+      .factura th, .factura td {
+        padding: 8px;
+      }
+    }
+  </style>
+  </head>
+  <body>
+
+  <h2 style="text-align:center;">Formulario para Solicitud de Factura</h2>
+
+  <form id="SolicitudesFacturas">
+  <section>
+  <fieldset>
+    <legend>Datos Personales</legend>
+    <label for="puesto">Nombre de solicitante:</label>
+    <input type="text" class="vacio" id="nombre" class="nombre"  name="nombre" placeholder="Nombre" required>
+
+    <label for="puesto">Puesto:</label>
+    <select name="puesto" class="vacio" class="lleno" id="puesto" required>
+      <option value="">--Selecciona un puesto--</option>
+      <option value="Gerente">Gerente</option>
+      <option value="Sub Gerente">Sub Gerente</option>
+      <option value="Driver">Driver</option>
+    </select>
+  </fieldset>
+   
+   
+   
+  <fieldset>
+  <legend>Datos de la Tienda</legend>
+    <label for="tienda">Formato:</label>
+    <select name="tienda" class="vacio" id="tienda" required>
+      <option value="">--Selecciona un formato--</option>
+      <option value="WALMART">WALMART</option>
+      <option value="WALMART EXPRESS">WALMART EXPRESS</option>
+      <option value="BODEGA AURRERA">BODEGA AURRERA</option>
+    </select>
+
+    <label for="serie">SERIE:</label>
+    <input type="text" id="serie" name="serie" placeholder="Serie" required>
+
+    <label for="codigo">Determinantes:</label>
+    <input type="text" id="det" name="determinante" placeholder="--Determinante--" required>
+
+    <label for="descripcion">Tienda:</label>
+    <input type="text" id="descripcion" name="sucursal" placeholder="Sucursal" readonly>
+  </fieldset>
+  
+
+ 
+  <fieldset>
+  <legend>Datos de la Factura</legend>
+    <label for="descripcion">Descripción o Comentario (Opcional)</label>
+    <input type="text" name="descripcion" placeholder="Descripción" >
+    
+  
+    <label for="fechaHoy">Fecha de hoy</label>
+    <input type="date" id="fechaHoy" name="fechaHoy" readonly>
+
+
+    <div class="date-row">
+      <div>
+        <label for="startDate">Fecha de inicio</label>
+        <input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required />
+      </div>
+      <div>
+        <label for="endDate">Fecha final</label>
+        <input type="date" class="vacio" id="endDate" name="endDate" placeholder="endDate" required />
+      </div>
+    </div>
+  </fieldset>  
+  
+  
+   <fieldset>
+    <legend>Datos del Servicio</legend>
+    <label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select>
+     
+    <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required>
+    
+    <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required>
+    
+    </fieldset>  
+  </section> 
+  <button type="submit">Vista Previa</button>
+  </form>
+
+
+  <div class="factura" id="vistaFactura">
+    <h2>Vista Previa de Factura</h2>
+    <p><strong>Fecha de hoy:</strong> <span id="vFechaHoy"></span></p>
+    <p><strong>Nombre:</strong> <span id="vNombre"></span></p>
+    <p><strong>Puesto:</strong> <span id="vPuesto"></span></p>
+    <p><strong>Tienda:</strong> <span id="vTienda"></span></p>
+    <p><strong>Sucursal:</strong> <span id="vSucursal"></span></p>
+    <p><strong>Determinante:</strong> <span id="vDeterminante"></span></p>
+    <p><strong>Serie:</strong> <span id="vSerie"></span></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Fecha de inicio</th>
+          <th>Fecha final</th>
+          <th>Tipo de Servicio</th>
+          <th>Precio Unitario</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="vDescripcion"></td>
+          <td id="vStartDate"></td>
+          <td id="vEndDate"></td>
+          <td id="vTipoServicio"></td>
+          <td id="vPrecioUnitario"></td>
+          <td id="vCantidad"></td>
+          <td id="vTotal"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button id="confirmarRegistro">✅ Confirmar y Registrar</button>
+    <a href="http//:index.html">INICIO</a>
+  </div>
+
+  <p id="status"></p>
+
+  <script>
+      
+    const tiendaSelect = document.getElementById('tienda');
+    const serieInput = document.getElementById('serie');
+
+    const formatos = {
+      'WALMART': 'WM',
+      'WALMART EXPRESS': 'WE',
+      'BODEGA AURRERA': 'WA'
+    };
+
+    tiendaSelect.addEventListener('change', function () {
+      const valor = this.value;
+      serieInput.value = formatos[valor] || '';
+    });
+
+    const detInput = document.getElementById('det');
+    const sucursalInput = document.getElementById('descripcion');
+
+    const tiendas = {
+  '2349': 'WM COSTERA 2349',
+  '1067': 'WM DIAMANTE 1067',
+  '3505': 'WM POLIGONO SUR 3505',
+  '3851': 'WM AEROPUERTO CDMX 3851',
+  '1083': 'WM PORTAL SAN ANGEL 1083',
+  '1460': 'WM CUEMANCO 1460',
+  '1584': 'WM ESMERALDA 1584',
+  '2689': 'WM FELIX CUEVAS 2689',
+  '1489': 'WM HIPERPLAZA TEXCOCO 1489',
+  '3876': 'WM LAS AGUILAS 3876',
+  '3790': 'WM METEPEC 3790',
+  '2464': 'WM MIRAMONTES 2464',
+  '3176': 'WM OJO DE AGUA 3176',
+  '4628': 'WM PARQUE LAS ANTENAS 4628',
+  '1770': 'WM PATIO SANTA FE 1770',
+  '2644': 'WM PATIO TLALPAN 2644',
+  '3852': 'WM PLATEROS 3852',
+  '2033': 'WM PLAZA ORIENTE 2033',
+  '1513': 'WM PORTAL CENTRO 1513',
+  '4018': 'WM SANTA MARIA COACALCO 4018',
+  '2347': 'WM TLAHUAC 2347',
+  '1656': 'WM CLUB DE GOLF 1656',
+  '1054': 'WM COLIMA NORTE 1054',
+  '1512': 'WM TERCER ANILLO 1512',
+  '2380': 'WM CIUDAD OBREGON 2380',
+  '2379': 'WM CULIACAN TRES RIOS 2379',
+  '1016': 'WM MERIDA NORTE 1016',
+  '4048': 'WM PENSIONES 4048',
+  '4073': 'WM POLIGONO 4073',
+  '3554': 'WM MIL CUMBRES MORELIA 3554',
+  '3114': 'WM CUMBRES MTY 3114',
+  '1622': 'WM GOMEZ MORIN 1622',
+  '2676': 'WM LA FE 2676',
+  '1139': 'WM LA HUASTECA 1139',
+  '1833': 'WM LA PASTORA 1833',
+  '2034': 'WM LAS TORRES 2034',
+  '2076': 'WM MIGUEL ALEMAN 2076',
+  '3239': 'WM PASEO REAL 3239',
+  '2179': 'WM SAN NICOLAS 2179',
+  '2378': 'WM TAMPICO AVENIDA 2378',
+  '2044': 'WM VALLE ORIENTE 2044',
+  '2431': 'WM TANGAMANGA 2431',
+  '4546': 'WM CAMPESTRE ZACATECAS 4546',
+  '2432': 'WM FELIPE PESCADOR 2432',
+  '2381': 'WM MORELIA LA HUERTA 2381',
+  '3356': 'WM LAZARO CARDENAS 3356',
+  '2734': 'WM PLAZA ANA ZAMORA 2734',
+  '3872': 'WM BALBUENA 3872',
+  '3533': 'WM GUADIANA 3533',
+  '1027': 'WM SENDERO 1027',
+  '3263': 'WM PILARES 3263',
+  '3858': 'WM CUAJIMALPA 3858',
+  '3845': 'WM UNIVERSIDAD 3845',
+  '3857': 'WM VILLA COAPA 3857',
+  '1195': 'WM GALERIA LAS TORRES 1195',
+  '2448': 'WM PUNTA DEL ESTE 2448',
+  '1621': 'WM LA ANTORCHA DE LEON 1621',
+  '3718': 'WM EJERCITO MEXICANO MZN 3718',
+  '4062': 'WM MANZANILLO 4062',
+  '4549': 'WM LOS MOCHIS JIQUILPAN 4549',
+  '1804': 'WM MACRO PLAZA OAXACA 1804',
+  '1585': 'WM LA ISLA 1585',
+  '4658': 'WM VIA ALTA 4658',
+  '3745': 'WM CLOUTHIER 3745',
+  '2645': 'WM ESCOBEDO NORTE 2645',
+  '2383': 'WM PASEO DE MONTEJO 2383',
+  '2384': 'WM CANCUN LABNA 2384',
+  '2765': 'WM SAN JOSE DEL CABO 2765',
+  '1003': 'WM PLAYA DEL CARMEN 1003',
+  '4138': 'WM VILLA JUAREZ 4138',
+  '3503': 'WM ECATEPEC CENTRO 3503',
+  '1462': 'WM LERMA 1462',
+  '3051': 'WM CENTRIKA 3051',
+  '3720': 'WM LINCOLN 3720',
+  '3358': 'WM CORDILLERAS 3358',
+  '3253': 'WM ALTABRISA 3253',
+  '1205': 'WM ALIJADORES 1205',
+  '4025': 'WM MADERO 4025',
+  '3632': 'WM COMALCALCO 3632',
+  '2302': 'WM CHIHUAHUA 2302',
+  '3794': 'WM ACUEDUCTO DE GUADALUPE 3794',
+  '3005': 'WM PLAZA ARAGON 3005',
+  '1108': 'WM ALTOZANO 1108',
+  '3355': 'WM ESTADIO DE MORELIA 3355',
+  '1171': 'WM SAN JOSE TECAMAC 1171',
+  '1423': 'WM SANTA ELENA 1423',
+  '3848': 'WM TAXQUEÑA 3848',
+  '1684': 'WM CHILPANCINGO 1684',
+  '5700': 'WM MEXICO 68 5700',
+  '3768': 'WA VILLA COAPA 3768',
+  '3795': 'WA TEXCOCO 3795',
+  '3805': 'WA SANTA LUCIA 3805',
+  '3803': 'WA OBSERVATORIO 3803',
+  '3760': 'WA LOMAS ESTRELLA 3760',
+  '3786': 'WA SANTA FE 3786',
+  '6067': 'WC CEDIS MONTERREY 6067',
+  '1084': 'WM NICHUPTE 1084',
+  '3874': 'WA CANTIL 3874',
+  '4547': 'WM EDUARDO MOLINA 4547',
+  '3774': 'WA FERROCARRIL HIDALGO 3774',
+  '2525': 'WA RIO HONDO 2525',
+  '3798': 'WA SANTA CECILIA 3798',
+  '3725': 'WA TOLUCA PILARES 3725',
+  '3871': 'WA PLAZA CUAUTITLAN 3871',
+  '3870': 'WA MORELIA 3870',
+  '3765': 'WA ECATEPEC 3765',
+  '3625': 'WA DIAZ BERLANGA 3625',
+  '2738': 'WA MITRAS 2738',
+  '3779': 'WA ACAPULCO COSTERA 3779',
+  '1553': 'WA HUINALA MONTERREY 1553',
+  '5730': 'WA CHICOLOAPAN 5730',
+  '3506': 'WM SIMBOLOS PATRIOS OAX 3506',
+  '3764': 'WA IZTAPALAPA 3764',
+  '3770': 'WA PANTITLAN 3770',
+  '3753': 'WA PLAZA ARAGON 3753',
+  '3888': 'WA VIA MORELOS 3888',
+  '1659': 'WM CAMPESTRE MERIDA 1659',
+  '3799': 'WA ANGELES IZTAPALAPA 3799',
+  '4067': 'WA VILLA GARCIA 4067',
+  '1024': 'WA VILLA ALVAREZ 1024',
+  '4028': 'WA SANTA ROSA APODACA 4028',
+  '3443': 'WA CLOUTHIER 3443',
+  '4113': 'WA CIUDAD DEL CARMEN 4113',
+  '4139': 'WM CAMPECHE 4139',
+  '4548': 'WM ELOY CAVAZOS 4548',
+  '4887': 'WM PROGRESO 4887',
+  '2433': 'WM TORRES LANDA 2433',
+  '2343': 'WM TOLLOCAN 2343',
+  '3860': 'WA ZARAGOZA 3860',
+  '1634': 'WA CUAUTZINGO CHALCO 1634',
+  '5061': 'WE MERIDA ORIENTE 5061',
+  '2871': 'WA VIENTO NUEVO 2871',
+  '1201': 'WA SAN AGUSTIN 1201',
+  '1001': 'WA SAN BUENAVENTURA 1001',
+  '6735': 'WM PUERTA TLATELOLCO 6735',
+  '2345': 'WM PLAZA TEPEYAC 2345',
+  '2737': 'WA ETZATLAN 2737',
+  '5702': 'WM SANTIN 5702',
+  '3763': 'WA MARIANO ESCOBEDO 3763',
+  '1682': 'WM SALVADOR NAVA 1682',
+  '3561': 'WA DURANGO 3561',
+  '2544': 'WA PRIMO DE VERDAD 2544',
+  '1931': 'WA LERDO 1931',
+  '1660': 'WA GUAMUCHIL 1660',
+  '4066': 'WA BARRANCOS 4066',
+  '2996': 'WA SANALONA 2996',
+  '1105': 'WA VILLA JUAREZ 1105',
+  '3613': 'WA CAMINO DE SERI 3613',
+  '4126': 'WA BLVD ZACATECAS 4126',
+  '2586': 'WA CIUDAD OBREGON 2586',
+  '4743': 'WA LAZARO CARDENAS ARPTO 4743',
+  '3555': 'WM PERIFERICO MERIDA 3555',
+  '3014': 'WM EL EDEN 3014',
+  '5765': 'WM LAS AMERICAS 5765',
+  '1204': 'WM LOS MOCHIS SUR 1204',
+  '3071': 'WM FRANCISCO VILLA 3071',
+  '1179': 'WA MORELIA NORTE III 1179',
+  '3622': 'WM LA ROSITA 3622',
+  '2529': 'WA MIELERAS 2529',
+  '1902': 'WM AEROPUERTO TAMPICO 1902',
+  '2325': 'WM COLINAS DEL PADRE 2325',
+  '1927': 'WA PUERTA DEL SOL 1927',
+  '5728': 'WM NORTE 2000 5728',
+  '3605': 'WM COMBO ELECTRICISTAS 3605',
+  '2204': 'WM MARINA MAZATLAN 2204',
+  '1974': 'WM BOSQUES DE RENTERIA 1974',
+  '1112': 'WE LOMAS 1112',
+  '3053': 'WE MONTEJO 3053',
+  '3896': 'WE FUENTES DEL PEDREGAL 3896',
+  '1823': 'WA JAR DE LA PRIMAVERA 1823',
+  '5462': 'WE LORETO 5462',
+  '4195': 'WA ZACAPU 4195',
+  '0194': 'WA LOS PUERTOS 0194',
+  '3932': 'WA CARRETERA REYNOSA 3932',
+  '4809': 'WM APODACA NORTE 4809',
+  '3033': 'WM FUENTES MARES 3033',
+  '3800': 'WM GUADALUPE 3800',
+  '4819': 'WM LAS FUENTES 4819',
+  '1617': 'WM NOVENA 1617',
+  '2304': 'WM MEXICALI 2304',
+  '2023': 'WM MACRO PLAZA TIJUANA 2023',
+  '1613': 'WM PLAYAS 1613',
+  '4155': 'WM 2000 4155',
+  '1147': 'WE MORELIA 1147',
+  '2766': 'WE FELIX CUEVAS 2766',
+  '4156': 'WM COLA DE BALLENA 4156',
+  '1623': 'WM CD CUAUHTEMOC 1623',
+  '2665': 'WA SANTA FE TIJUANA 2665',
+  '1828': 'WA ACOLMAN 1828',
+  '4170': 'WE METEPEC 4170',
+  '2377': 'WM EJERCITO NACIONAL 2377',
+  '3879': 'WM COLIMA GALVAN 3879',
+  '4817': 'WM EL FRESNO 4817',
+  '4011': 'WM TIJUANA HIPODROMO 4011',
+  '1470': 'WA SAN PEDRO COAHUILA 1470',
+  '4196': 'WA SABINAS 4196',
+  '5731': 'WA PIEDRAS NEGRAS 5731',
+  '5041': 'WM NUEVO MEXICALI 5041',
+  '1425': 'WM BAHIA DE BANDERAS 1425',
+  '3015': 'WM ENSENADA 3015',
+  '3119': 'WA CAMINO REAL 3119',
+  '1130': 'WM BELISARIO DOMINGUEZ 1130',
+  '1160': 'WE TECNOLOGICO 1160',
+  '5043': 'WA CHAC MOOL 5043',
+  '4026': 'WM GALERIAS DEL VALLE 4026',
+  '1203': 'WM SUPER PLAZA ECATEPEC 1203',
+  '3881': 'WE SANTA FE 3881',
+  '2895': 'WE LA MARINA 2895',
+  '5687': 'WM DELTA GUANAJUATO 5687',
+  '2735': 'WM LA CRUZ 2735',
+  '5241': 'WM SAN PATRICIO 5241',
+  '3775': 'WA AURORA 3775',
+  '3861': 'WM REVOLUCION 3861',
+  '1022': 'WM LOPEZ MATEOS 1022',
+  '3348': 'WM BATAN 3348',
+  '5115': 'WE CAMINO A SANTA RITA 5115',
+  '1018': 'WA TEMIXCO II 1018',
+  '1404': 'WM GALERIAS SALTILLO 1404',
+  '3837': 'WE LUIS CABRERA 3837',
+  '3397': 'WE MAYORAZGO 3397',
+  '3832': 'WE HOMERO 3832',
+  '4187': 'WM PABELLON ROSARITO 4187',
+  '5081': 'WA CALZADA DEL SOL 5081',
+  '1468': 'WA APATZINGAN 1468',
+  '2050': 'WM URUAPAN 2050',
+  '5764': 'WM TORRES SUR 5764',
+  '2049': 'WM ZARAGOZA 2049',
+  '2089': 'WM PLAZA MONUMENTAL 2089',
+  '5799': 'WA ZIHUATANEJO 5799',
+  '3806': 'WA RENACIMIENTO 3806',
+  '2465': 'WM REFORMA SALTILLO 2465',
+  '1124': 'WA CORALES 1124',
+  '1004': 'WA TALLERES 1004',
+  '2476': 'WA NAHIL 2476',
+  '3670': 'WA PLAYA MAYA 3670',
+  '1665': 'WA VILLAS OTOCH 1665',
+  '3362': 'WA TOPO CHICO 3362',
+  '1033': 'WA CADEREYTA 1033',
+  '3734': 'WA EL CONCHI 3734',
+  '1401': 'WA LOS SAUCES 1401',
+  '3977': 'WM PORTAL CENTENARIO 3977',
+  '4922': 'WM PURISIMA 4922',
+  '3915': 'WE AV. TOLUCA 3915',
+  '3030': 'WM MORELOS 3030',
+  '3916': 'WA IZTAPALAPA NORTE 3916',
+  '1685': 'WM AEROPUERTO CD CARMEN 1685',
+  '1044': 'WM SAN MARCOS 1044',
+  '4778': 'WA CAJEME 4778',
+  '5464': 'WA ALTAMIRA CENTRO 5464',
+  '2457': 'WA ALTAMIRA SUR 2457',
+  '3623': 'WA LOS FRESNOS 3623',
+  '2000': 'WA MAZATLAN 2000',
+  '5658': 'WA MONUMENTO COLOSIO 5658',
+  '1075': 'WE PROVIDENCIA 1075',
+  '1049': 'WA ESTADIO CULIACAN 1049',
+  '5791': 'WM ZINACANTEPEC 5791',
+  '3839': 'WE GIRASOLES 3839',
+  '3069': 'WM LOS CABOS 3069',
+  '5465': 'WA LAS TORRES CULIACAN 5465',
+  '3907': 'WA COLOSO II 3907',
+  '3199': 'WE PASEOS DE TAXQUEÑA 3199',
+  '3536': 'WA MANZANILLO 3536',
+  '3524': 'WA SALAGUA 3524',
+  '4109': 'WM PUERTA TEXCOCO 4109',
+  '3819': 'WE DEL VALLE 3819',
+  '4157': 'WA PERIFERICO CUAUTITLAN 4157',
+  '3065': 'WA BOSQUES DEL VALLE 3065',
+  '3791': 'WA FUENTES DEL VALLE 3791',
+  '3813': 'WE CHURUBUSCO 3813',
+  '5825': 'WM ALFREDO DEL MAZO 5825',
+  '3818': 'WE REVOLUCION 3818',
+  '3840': 'WE PATIO PEDREGAL 3840',
+  '3810': 'WE SENA 3810',
+  '3296': 'WA VILLAS DE AYOTLA 3296',
+  '2072': 'WA PORTAL CHALCO 2072',
+  '3891': 'WA LOS REYES 3891',
+  '4198': 'WA EL TENAYO 4198',
+  '1686': 'WM LA CIMA 1686',
+  '2097': 'WA PUEBLO NUEVO 2097',
+  '3675': 'WA AYUTLA DE LOS LIBRES 3675',
+  '1541': 'WA MIGUEL ALEMAN 1541',
+  '3046': 'WA MARAVATIO 3046',
+  '3034': 'WE FUENTES DE LAS LOMAS 3034',
+  '2303': 'WM HERMOSILLO 2303',
+  '3841': 'WE LILAS 3841',
+  '3863': 'WM PERIFERICO SUR 3863',
+  '4017': 'WA TOLUCA AZTECAS 4017',
+  '4993': 'WA CALLE 50 MERIDA 4993',
+  '5732': 'WA TECOMAN 5732',
+  '1140': 'WM SAN PEDRO 1140',
+  '2053': 'WM COLOSIO 2053',
+  '5914': 'WC CEDIS ECOMMERCE 5914',
+  '2284': 'WM PORTAL CUAUTITLAN 2284',
+  '2591': 'WA TAMPICO 2591',
+  '1118': 'WE CENTRAL INTERLOMAS 1118',
+  '5112': 'WM PETEMPICH 5112',
+  '3750': 'WA AUTOPISTA MEXICO QRO 3750',
+  '1089': 'WA SANTA ROSA 1089',
+  '2074': 'WM CARRETERA 57 2074',
+  '3504': 'WM JESUS DEL MONTE 3504',
+  '5352': 'WM GOMEZ PALACIO 5352',
+  '2024': 'WA EJERCITO MEXICANO 2024',
+  '2869': 'WA ZUAZUA 2869',
+  '3843': 'WE DIVISION DEL NORTE 3843',
+  '3076': 'WA SALINA CRUZ 3076',
+  '4125': 'WA TERAN 4125',
+  '3304': 'WA CARRETERA VILLA FLORES 3304',
+  '1005': 'WA KABAH 1005',
+  '3827': 'WE PERIFERICO 3827',
+  '3073': 'WA MULTIPLAZA REAL 3073',
+  '6068': 'WC CEDIS GUADALAJARA 6068',
+  '3630': 'WM ADELITAS 3630',
+  '2540': 'WM VICTORIA CENTRO 2540',
+  '2382': 'WM INTERLOMAS 2382',
+  '1388': 'WA NICHUPTE 1388',
+  '1110': 'WA PLAZA ECATEPEC 1110',
+  '1810': 'WM SAN ISIDRO 1810',
+  '4071': 'WM PATRIA 4071',
+  '3692': 'WA VALLE DE LINCOLN 3692',
+  '3399': 'WA COZUMEL 3399',
+  '1038': 'WA CHETUMAL 1038',
+  '3608': 'WM MIRAMAR 3608',
+  '1550': 'WM MACROPLAZA VALLARTA 1550',
+  '1667': 'WA CABORCA 1667',
+  '5119': 'WA CABORCA NORTE 5119',
+  '4199': 'WA SAN LUIS RIO COLORADO 4199',
+  '3100': 'WA QUINTAS DEL REFUGIO 3100',
+  '2919': 'WA EL AGUILA 2919',
+  '1034': 'WA HERMOSILLO NORTE 1034',
+  '4669': 'WA MUSARO 4669',
+  '2243': 'WA NAVOJOA 2243',
+  '3406': 'WA PUERTO PEÑASCO 3406',
+  '5240': 'WM NAVOJOA 5240',
+  '1478': 'WA MAGDALENA DE KINO 1478',
+  '4068': 'WA AGUA PRIETA 4068',
+  '3038': 'WA CD MANTE 3038',
+  '2223': 'WA REYNOSA BALCONES 2223',
+  '3103': 'WA LAURO VILLAR 3103',
+  '4016': 'WA PLAYA DEL CARMEN 4016',
+  '5163': 'WA NOGALES SUR 5163',
+  '2073': 'WA NOGALES 2073',
+  '4815': 'WA CAMINO A CANANEA 4815',
+  '3102': 'WA CD CONSTITUCION 3102',
+  '1824': 'WA LOS CABOS 1824',
+  '3485': 'WA OTAY 3485',
+  '5062': 'WA SANTA ANITA CADEREYTA 5062',
+  '3298': 'WA ESCOBEDO 3298',
+  '2026': 'WA ACAPULCO UNIVERSIDAD 2026',
+  '1821': 'WA SAN LORENZO 1821',
+  '3831': 'WE COYOACAN 3831',
+  '3817': 'WE GEORGIA 3817',
+  '5817': 'WE AXOMIATLA 5817',
+  '1829': 'WA ALMOLOYA 1829',
+  '3801': 'WA SANTO DOMINGO 3801',
+  '4902': 'WA SAN JUAN ZUAZUA 4902',
+  '0058': 'WA SANTA MONICA 0058',
+  '5712': 'WA SOLIDARIDAD 5712',
+  '5661': 'WA LOMAS DE LA PRESA 5661',
+  '2899': 'WA HERMOSILLO OTE 2899',
+  '3514': 'WA SAHUARO 3514',
+  '4158': 'WA OBREGON PONIENTE 4158',
+  '1341': 'WA ESPERANZA 1341',
+  '4703': 'WA MIRAMAR 4703',
+  '1235': 'WA LOMAS DE SANTA MONICA 1235',
+  '3833': 'WE JARDINES DEL PEDREGAL 3833',
+  '2075': 'WM MUÑOZ 2075',
+  '1887': 'WA EXP GLORIETA MORELOS 1887',
+  '1711': 'WA EXP LOS REMEDIOS 1711',
+  '6202': 'WA RANCHO BLANCO 6202',
+  '5796': 'WE PUERTA DE HIERRO 5796',
+  '1501': 'WA OZUMBA 1501',
+  '1586': 'WA CIENEGA DE FLORES 1586',
+  '3654': 'WA VILLA DEL CARBON 3654',
+  '3043': 'WA ZINACANTEPEC 3043',
+  '3828': 'WE LOS MORALES 3828',
+  '1109': 'WA PATIO AYOTLA 1109',
+  '5687': 'WM DELTA 5687',
+  '2220': 'WE RUBEN DARIO 2220',
+  '2240': 'WA SANTA CRUZ 2240',
+  '1142': 'WA TOTOLTEPEC 1142',
+  '3782': 'WA CENTENARIO 3782',
+  '3047': 'WA JILOTEPEC 3047',
+  '1236': 'WA ATLACOMULCO 1236',
+  '4540': 'WM 16 DE SEPTIEMBRE 4540',
+  '3719': 'WM MATAMOROS 3719',
+  '3778': 'WA XOCHIMILCO 3778',
+  '3878': 'WM NIÑO OBRERO 3878',
+  '2062': 'WA PLAYA DEL CARMEN NTE 2062',
+  '3829': 'WE BOSQUES DE LAS LOMAS 3829',
+  '4956': 'WE CIRCUITO METROPOLITANO 4956',
+  '3941': 'WE TULUM 3941',
+  '4558': 'WA TECAMAC 4558',
+  '3755': 'WA TACUBAYA 3755',
+  '3721': 'WM AVILA CAMACHO 3721',
+  '3757': 'WA SAN JUAN DE ARAGON 3757',
+  '3921': 'WE VISTA HERMOSA 3921',
+  '3211': 'WM INDEPENDENCIA 3211',
+  '5064': 'WM CABO MARINA 5064',
+  '1528': 'WE CUMBRES 1528',
+  '3026': 'WA GOBERNADORA 3026',
+  '5291': 'WA PASEO MONTERREY 5291',
+  '1028': 'WA BOURLOG 1028',
+  '5297': 'WM LOLA BELTRAN 5297',
+  '3400': 'WA DELICIAS 3400',
+  '3956': 'WM CALANDRIAS TESISTAN 3956',
+  '6338': 'WM FRANCISCO VILLAREAL 6338',
+  '5662': 'WA TENANCINGO 5662',
+  '2221': 'WA ALPINISMO 2221',
+  '5334': 'WM CIUDAD ACUÑA 5334',
+  '1119': 'WM COLON 1119',
+  '5176': 'WM VIÑA ANTIGUA 5176',
+  '3769': 'WA INSURGENTES NORTE 3769',
+  '3930': 'WA LAS PINTAS 3930',
+  '1019': 'WA SAN PEDRITO 1019',
+  '3789': 'WA REVOLUCION 3789',
+  '3360': 'WA TOLUQUILLA 8 DE JULIO 3360',
+  '2528': 'WA FLORES MAGON 2528',
+  '3527': 'WA CHETUMAL NORTE 3527',
+  '2767': 'WA DOCTORES 2767',
+  '3098': 'WA GUADALUPANA 3098',
+  '5375': 'WA PESQUERIA NORTE 5375',
+  '4354': 'WM QUIROGA 4354',
+  '5733': 'WA PLAZA CHIMALHUACAN 5733',
+  '3766': 'WA LA VIGA 3766',
+  '2741': 'WA OTILIO GONZALEZ 2741',
+  '5770': 'WA ZUMPANGO 5770',
+  '3177': 'WE LA JOYA 3177',
+  '2830': 'WE J. DE LA MONTAÑA 2830',
+  '1785': 'WA NORTE MATAMOROS 1785',
+  '0862': 'WA JARACHINA 0862',
+  '1100': 'WE LAS TORRES 1100',
+  '4666': 'WE IZCALLI 4666',
+  '3054': 'WE SANTA ANITA 3054',
+  '3628': 'WA SAN MIGUEL 3628',
+  '1246': 'WA SALINAS VICTORIA 1246',
+  '1519': 'WA TLALMANALCO 1519',
+  '1955': 'WA NAPOLO 1955',
+  '1006': 'WA HOSPITAL GENERAL 1006',
+  '3099': 'WA COLIMA CENTRO 3099',
+  '1419': 'WA NUEVO MEXICALI 1419',
+  '4520': 'WA SAN JOSE VISTA HERMOSA 4520',
+  '1400': 'WA JOYAS DE COACALCO 1400',
+  '3061': 'WM COMBO PACHUCA 3061',
+  '5331': 'WM PORVENIR JUAREZ 5331',
+  '1008': 'WA HEROES TECAMAC 1008',
+  '2141': 'WA XONACATLAN 2141',
+  '4154': 'WM PERINORTE 4154',
+  '5300': 'WM COLOSIO 5300',
+  '5296': 'WM SAN REMO 5296',
+  '3031': 'WM CELAYA IRRIGACION 3031',
+  '5801': 'WM FUNDIDORES LOPEZ M 5801',
+  '3150': 'WA CAPULTITLAN 3150',
+  '3152': 'WA SAN PABLO AUTOPAN 3152',
+  '2092': 'WE CAMPESTRE AGUASCALIEN 2092',
+  '4164': 'WA CIHUATLAN 4164',
+  '2363': 'WA CRUZ DE ELOTA 2363',
+  '3784': 'WA PRIMERO DE MAYO 3784',
+  '1103': 'WA PER. SUR HERMOSILLO 1103',
+  '3816': 'WE PEDREGAL 3816',
+  '1900': 'WA DOS RIOS 1900',
+  '5304': 'WA LA CRESPA 5304',
+  '5171': 'WM CIUDAD VALLES 5171',
+  '2948': 'WA JIBARITO 2948',
+  '3480': 'WE WTC DAKOTA 3480',
+  '2225': 'WA TIJUANA SUR 2225',
+  '3796': 'WA MAYORAZGO 3796',
+  '3783': 'WA SANTA CLARA 3783',
+  '1234': 'WA APODACA SUR 1234',
+  '3016': 'WM MACRO PLAZA HEROES TECA3016',
+  '1943': 'WA FRACC LAS AMERICAS 1943',
+  '3040': 'WA JUAN PABLO 3040',
+  '3022': 'WA PROGRESO 3022',
+  '1492': 'WE OLIPLAZA 1492',
+  '5469': 'WM RIO DE LOS REMEDIOS 5469',
+  '2782': 'WA OCOYOACAC 2782',
+  '3363': 'WA TLALCICALPAN 3363',
+  '2029': 'WA ITZAES 2029',
+  '5162': 'WA VILLAS DEL SOL 5162',
+  '5350': 'WM CD GUZMAN SUR 5350',
+  '5798': 'WA SANTA MARGARITA 5798',
+  '3665': 'WA CANUTILLO 3665',
+  '3144': 'WA PRADO II 3144',
+  '2375': 'WM TORREON 2375',
+  '0889': 'WM CUSPIDE SANTA ROSA 0889',
+  '1017': 'WA QUETZALCOATL 1017',
+  '3213': 'WA LA PRESA 3213',
+  '5292': 'WA LA PAZ 5292',
+  '3846': 'WM BUENAVISTA 3846',
+  '2466': 'WM CUITLAHUAC 2466',
+  '6105': 'WC CEDIS PARCEL MERIDA 6105',
+  '2053': 'WC CEDIS PARC HERMOSILLO 2053',
+  '1867': 'WA FELIX GALVAN 1867',
+  '5855': 'WM LAS ALAMEDAS 5855',
+  '7487': 'WC CEDIS PARCEL CULIACAN 7487',
+  '3511': 'WM PORTAL TLALNEPANTLA 3511',
+  '3751': 'WA INSURGENTES SUR 3751',
+  '3850': 'WM ECHEGARAY 3850',
+  '861': 'WA CIMA VICTORIA 861',
+  '2346': 'WM GALERIAS 2346',
+  '2811': 'WA AXOCHIAPAN 2811',
+  '3228': 'WA MANTO DE LA VIRGEN 3228',
+  '2211': 'WM MAHATMA GANDI 2211',
+  '5238': 'WM SILAO NORTE 5238',
+  '3629': 'WE ECHEGARAY 3629',
+  '3666': 'WA XALAPA 3666',
+  '3220': 'WA ROMITA 3220',
+  '3716': 'WA JARAL DEL PROGRESO 3716',
+  '3804': 'WA HILARIO MEDINA 3804',
+  '2851': 'WA HILAMAS 2851',
+  '4012': 'WM JARDINES DEL SOL 4012',
+  '2091': 'WM EL SAUZ 2091',
+  '2054': 'WA TERRANOVA 2054',
+  '1627': 'WE SAN ISIDRO 1627',
+  '4545': 'WM RIO VERDE 4545',
+  '1053': 'WE ACOXPA 1053',
+  '6510': 'WM PUERTO PEÑASCO 6510',
+  '5771': 'WA CERVANTES 5771',
+  '5046': 'WE PUNTA ZERO 5046',
+  '1020': 'WE MANUEL ACUÑA 1020',
+  '6586': 'SM SAM´S CLUB CULIACAN 6586',
+  '2994': 'WA DUARTE 2994',
+  '2344': 'WM LOMAS TOREO 2344',
+  '3879': 'WC CEDIS PARCEL COLIMA 3879',
+  '2945': 'WA VALLADOLID 2945',
+  '1539': 'WA ALAMO 1539',
+  '2136': 'WA BOULEVARD MORELOS 2136',
+  '5055': 'WM CONCORDIA 5055',
+  '2023': 'WM MACROPLAZA INSURGENTES 2023',
+  '1015': 'WM IRAPUATO 1015',
+  '4075': 'WA PATRICIO TRUEBA 4075',
+  '1037': 'WA CAMPECHE ESTE 1037',
+  '2108': 'WA KALA 2108',
+  '2505': 'WA ANILLO VIAL 2505'
+    };
+
+      const hoy = new Date().toISOString().split('T')[0];
+      document.getElementById('fechaHoy').value = hoy;
+
+    detInput.addEventListener('input', function () {
+      const codigo = this.value.trim();
+      sucursalInput.value = tiendas[codigo] || '';
+    });
+
+    const form = document.getElementById('SolicitudesFacturas');
+    const status = document.getElementById('status');
+    const vistaFactura = document.getElementById('vistaFactura');
+    const confirmarBtn = document.getElementById('confirmarRegistro');
+
+    let datosTemp = {};
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const precio = parseFloat(formData.get('precioUnitario'));
+      const cantidad = parseInt(formData.get('cantidad'));
+      const total = (precio * cantidad).toFixed(2);
+
+      datosTemp = {
+        nombre: formData.get('nombre'),
+        puesto: formData.get('puesto'),
+        tienda: formData.get('tienda'),
+        sucursal: formData.get('sucursal'),
+        determinante: formData.get('determinante'),
+        serie: formData.get('serie'),
+        descripcion: formData.get('descripcion'),
+        fechaHoy: formData.get('fechaHoy'),
+        startDate: formData.get('startDate'),
+        endDate: formData.get('endDate'),
+        tipoServicio: formData.get('tipoServicio'),
+        precioUnitario: precio.toFixed(2),
+        cantidad: cantidad,
+        total: total
+      };
+
+      document.getElementById('vNombre').textContent = datosTemp.nombre;
+      document.getElementById('vPuesto').textContent = datosTemp.puesto;
+      document.getElementById('vTienda').textContent = datosTemp.tienda;
+      document.getElementById('vSucursal').textContent = datosTemp.sucursal;
+      document.getElementById('vDeterminante').textContent = datosTemp.determinante;
+      document.getElementById('vSerie').textContent = datosTemp.serie;
+      document.getElementById('vDescripcion').textContent = datosTemp.descripcion;
+      
+      document.getElementById('vFechaHoy').textContent = datosTemp.fechaHoy;
+      document.getElementById('vStartDate').textContent = datosTemp.startDate;
+      document.getElementById('vEndDate').textContent = datosTemp.endDate;
+      
+      document.getElementById('vTipoServicio').textContent = datosTemp.tipoServicio;
+      document.getElementById('vPrecioUnitario').textContent = `$${datosTemp.precioUnitario}`;
+      document.getElementById('vCantidad').textContent = datosTemp.cantidad;
+      document.getElementById('vTotal').textContent = `$${datosTemp.total}`;
+
+      form.style.display = 'none';
+      vistaFactura.style.display = 'block';
+      status.textContent = '';
+    });
+
+    confirmarBtn.addEventListener('click', function () {
+      const payload = { data: [datosTemp] };
+
+      fetch('https://sheetdb.io/api/v1/gzxxfvgaytsrg', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.json())
+      .then(result => {
+        status.textContent = "✅ Factura registrada correctamente en Sheets.";
+        confirmarBtn.disabled = true;
+      })
+      .catch(error => {
+        status.textContent = "❌ Error al registrar: " + error;
+      });
+    });
+
+</script>  
+      
+      
+      
+
+  </body>
+  </html>

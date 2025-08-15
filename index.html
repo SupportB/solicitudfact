@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Botones Centrales</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    font-size: 35px;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0fdf4;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 200px;
+  }
+
+  button {
+    display: block;
+    width: 450px;
+    margin: 100px auto;
+    padding: 40px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: #22c55e;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background-color: #15803d;
+  }
+
+  fieldset {
+    border: 2px solid #22c55e;
+    border-radius: 10px;
+    padding: 20px;
+    background: white;
+  }
+</style>
+</head>
+<body>
+<section>
+  <fieldset>
+    <div class="container">
+      <h1>SOLICITUD DE FACTURAS WALMART</h1>
+      <button onclick="window.location.href='formulario1.html'">1 CONCEPTO</button>
+      <button onclick="window.location.href='formulario2.html'">VARIOS COPNCEPTOS</button>
+    </div>
+  </fieldset>
+</section>
+</body>
+</html>
