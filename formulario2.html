@@ -1,173 +1,517 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Solicitud de Factura con Partidas</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    font-size: 35px;  
-    padding: 50px;
-    background: #f0fdf4;
-  }
-  fieldset {
-    border: 10px solid #4ade80;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    color: #111801;
-    margin: 0;  
-  }
-  legend {
-    font-weight: bold;
-    color: #166534;
-  }
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-  input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #86efac;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-  }
-  th {
-    background: #bbf7d0;
-  }
-  button  {
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Solicitud de Factura</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 35px;    
+      padding: 50px;
+      background: #f0fdf4;
+      color: #111801;
+      margin: 0;
+    }
+
+    h2 {
+      text-align: center;
+      color: #111801;
+    }
     
-    font-size: 50px;  
-    margin-top: 10px;
-    padding: 10px 8PX;
-    background: #22c55e;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #15803d;
-  }
-    #btn2  {
-    font-size: 25px;  
-    margin-top: 10px;
-    padding: 42px 274PX;
-    background: #22c55e;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  #btn2:hover {
-    background: #15803d;
-  }
-    #btn {
-    font-size: 20px;       /* Texto más grande */
-    padding: 15px 40px;    /* Más espacio interno */
-    background: #16a34a;   /* Verde más oscuro */
+    fieldset {
+      border: 10px solid #4ade80;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    
+    legend {
+      font-weight: bold;
+      color: #166534;
+      padding: 0 10px;
+    }
+    
+    section {
+      background: #EBF9EB;
+      padding: 13px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      font-size: 1em;
+      background: #f0fdf4;
+      box-sizing: border-box;
+    }
+      
+      .vacio {
+      background-color: #F7F7F7;
+    }
+      
+      .lleno {
+    background-color: #d1fae5; 
   }
 
-  #btn:hover {
-    background: #15803d;   /* Hover */
-  }
-  #previewFactura {
-    display: none;
-    margin-top: 20px;
-    padding: 15px;
-    border: 2px solid #15803d;
-    border-radius: 8px;
-    background: #e7fce7;
-  }
-</style>
-</head>
-<body>
 
-<h2>Solicitud de Factura</h2>
+    input:focus, select:focus {
+      outline: none;
+      border-color: #22c55e;
+      box-shadow: 0 0 5px #4ade80;
+      background: #ecfdf5;
+    }
+      
+    
 
-<form id="facturaForm">
+    button {
+      background-color: #22c55e;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      padding: 62px;
+    }
+
+    button:hover {
+      background-color: #15803d;
+    }
+
+    .factura {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .factura table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.95em;
+    }
+
+    .factura th, .factura td {
+      border: 1px solid #093E17;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .factura th {
+      background-color: #bbf7d0;
+      color: #064e3b;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #065f46;
+    }
+      
+  
+      
+     /* Responsive */
+    @media screen and (max-width: 767px) {
+      body {
+        padding: 20px;
+      }
+      form, .factura {
+        padding: 20px;
+      }
+      h2 {
+        font-size: 1.2em;
+      }
+      input, select, button {
+        font-size: 0.95em;
+        padding: 10px;
+      }
+      .factura table {
+        font-size: 0.85em;
+      }
+      .factura th, .factura td {
+        padding: 8px;
+      }
+    }
+  </style>
+  </head>
+  <body>
+
+  <h2 style="text-align:center;">Formulario para Solicitud de Factura</h2>
+
+  <form id="SolicitudesFacturas">
   <section>
-    <fieldset>
-      <legend>Datos Personales</legend>
-      <label for="nombre">Nombre de solicitante:</label>
-      <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+  <fieldset>
+    <legend>Datos Personales</legend>
+    <label for="puesto">Nombre de solicitante:</label>
+    <input type="text" class="vacio" id="nombre" class="nombre"  name="nombre" placeholder="Nombre" required>
 
-      <label for="puesto">Puesto:</label>
-      <select name="puesto" id="puesto" required>
-        <option value="">--Selecciona un puesto--</option>
-        <option value="Gerente">Gerente</option>
-        <option value="Sub Gerente">Sub Gerente</option>
-        <option value="Driver">Driver</option>
-      </select>
-    </fieldset>
-    
-    <fieldset>
-      <legend>Datos de la Tienda</legend>
-      <label for="tienda">Formato:</label>
-      <select name="tienda" id="tienda" required>
-        <option value="">--Selecciona un formato--</option>
-        <option value="WALMART">WALMART</option>
-        <option value="WALMART EXPRESS">WALMART EXPRESS</option>
-        <option value="BODEGA AURRERA">BODEGA AURRERA</option>
-      </select>
+    <label for="puesto">Puesto:</label>
+    <select name="puesto" class="vacio" class="lleno" id="puesto" required>
+      <option value="">--Selecciona un puesto--</option>
+      <option value="Gerente">Gerente</option>
+      <option value="Sub Gerente">Sub Gerente</option>
+      <option value="Driver">Driver</option>
+    </select>
+  </fieldset>
+   
+   
+   
+  <fieldset>
+  <legend>Datos de la Tienda</legend>
+    <label for="tienda">Formato:</label>
+    <select name="tienda" class="vacio" id="tienda" required>
+      <option value="">--Selecciona un formato--</option>
+      <option value="WALMART">WALMART</option>
+      <option value="WALMART EXPRESS">WALMART EXPRESS</option>
+      <option value="BODEGA AURRERA">BODEGA AURRERA</option>
+    </select>
 
-      <label for="serie">Serie:</label>
-      <input type="text" id="serie" name="serie" placeholder="Serie" required>
+    <label for="serie">SERIE:</label>
+    <input type="text" id="serie" name="serie" placeholder="Serie" required>
 
-      <label for="codigo">Determinantes:</label>
-    <input type="text" id="det" name="determinante" placeholder="--Determinante--" required>
+    <label for="codigo">Determinantes:</label>
+    <input type="text" class="vacio" class="lleno" id="det" name="determinante" placeholder="--Determinante--" required>
 
     <label for="descripcion">Tienda:</label>
     <input type="text" id="descripcion" name="sucursal" placeholder="Sucursal" readonly>
+  </fieldset>
+  
 
-
-      <label for="fecha">Fecha:</label>
-      <input type="date" id="fecha" name="fecha" readonly>
-    </fieldset>    
-
-    <fieldset>
-      <legend>Partidas</legend>
-      <table id="tablaPartidas">
-        <thead>
-          <tr>
-            <th>Descripción</th>
-            <th>Cantidad</th>
-            <th>Precio Unitario</th>
-            <th>Importe</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button type="button" id="btn" onclick="agregarPartida()">➕ Agregar Partida</button>
-    </fieldset>
-  </section>
-
-  <button type="button" id="btn2" onclick="mostrarPreview()">Vista Previa</button>
-  <button type="submit" id="btn2">Enviar Factura</button>
-</form>
-
-<div id="previewFactura">
-  <h3>Vista Previa de Factura</h3>
-  <div id="previewContent"></div>
-  <button onclick="ocultarPreview()">Cerrar Vista Previa</button>
-</div>
-
-<script>
-const API_URL = "TU_URL_DE_GOOGLE_APPS_SCRIPT"; // Coloca aquí la URL de tu API de Sheets
+ 
+  <fieldset>
+  <legend>Datos de la Factura</legend>
     
-const tiendaSelect = document.getElementById('tienda');
+    <label for="fechaHoy">Fecha de hoy</label>
+    <input type="date" id="fechaHoy" name="fechaHoy" readonly>
+
+
+    <div class="date-row">
+      <div>
+        <label for="startDate">Fecha de inicio</label>
+        <input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required />
+      </div>
+      <div>
+        <label for="endDate">Fecha final</label>
+        <input type="date" class="vacio" id="endDate" name="endDate" placeholder="endDate" required />
+      </div>
+    </div>
+  </fieldset>  
+  
+  
+  <fieldset>
+  <legend>PARTIDA 1</legend>
+<table border="5">
+  <tr>
+    <td>Descripción</td>
+    <td>Fecha</td>
+    <td>Tipo de Servicio</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+  </tr>
+  <tr>
+    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
+    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
+    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select></td>
+    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
+    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
+  </tr>
+</table>
+</fieldset>
+
+<fieldset>
+  <legend>PARTIDA 2</legend>
+<table border="5">
+  <tr>
+    <td>Descripción</td>
+    <td>Fecha</td>
+    <td>Tipo de Servicio</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+  </tr>
+  <tr>
+    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
+    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
+    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select></td>
+    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
+    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
+  </tr>
+</table>
+</fieldset>
+
+<fieldset>
+  <legend>PARTIDA 3</legend>
+<table border="5">
+  <tr>
+    <td>Descripción</td>
+    <td>Fecha</td>
+    <td>Tipo de Servicio</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+  </tr>
+  <tr>
+    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
+    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
+    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select></td>
+    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
+    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
+  </tr>
+</table>
+</fieldset>
+
+<fieldset>
+  <legend>PARTIDA 4</legend>
+<table border="5">
+  <tr>
+    <td>Descripción</td>
+    <td>Fecha</td>
+    <td>Tipo de Servicio</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+  </tr>
+  <tr>
+    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
+    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
+    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select></td>
+    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
+    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
+  </tr>
+</table>
+</fieldset>
+
+<fieldset>
+  <legend>PARTIDA 5</legend>
+<table border="5">
+  <tr>
+    <td>Descripción</td>
+    <td>Fecha</td>
+    <td>Tipo de Servicio</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+  </tr>
+  <tr>
+    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
+    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
+    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select></td>
+    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
+    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
+  </tr>
+</table>
+</fieldset>
+
+<fieldset>
+  <legend>PARTIDA 6</legend>
+<table border="5">
+  <tr>
+    <td>Descripción</td>
+    <td>Fecha</td>
+    <td>Tipo de Servicio</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+  </tr>
+  <tr>
+    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
+    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
+    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select></td>
+    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
+    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
+  </tr>
+</table>
+</fieldset>
+
+<fieldset>
+  <legend>PARTIDA 7</legend>
+<table border="5">
+  <tr>
+    <td>Descripción</td>
+    <td>Fecha</td>
+    <td>Tipo de Servicio</td>
+    <td>Cantidad</td>
+    <td>Precio Unitario</td>
+  </tr>
+  <tr>
+    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
+    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
+    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
+    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
+      <option value="">--Selecciona un Servicio--</option>
+      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
+      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
+      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
+      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
+      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
+      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
+      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
+      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
+    </select></td>
+    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
+    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
+  </tr>
+</table>
+</fieldset>
+      
+    
+      
+  </section> 
+  <button type="submit">Vista Previa</button>
+  </form>
+
+
+  <div class="factura" id="vistaFactura">
+    <h2>Vista Previa de Factura</h2>
+    <p><strong>Fecha de hoy:</strong> <span id="vFechaHoy"></span></p>
+    <p><strong>Nombre:</strong> <span id="vNombre"></span></p>
+    <p><strong>Puesto:</strong> <span id="vPuesto"></span></p>
+    <p><strong>Tienda:</strong> <span id="vTienda"></span></p>
+    <p><strong>Sucursal:</strong> <span id="vSucursal"></span></p>
+    <p><strong>Determinante:</strong> <span id="vDeterminante"></span></p>
+    <p><strong>Serie:</strong> <span id="vSerie"></span></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th>Fecha de inicio</th>
+          <th>Fecha final</th>
+          <th>Tipo de Servicio</th>
+          <th>Precio Unitario</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="vDescripcion"></td>
+          <td id="vStartDate"></td>
+          <td id="vEndDate"></td>
+          <td id="vTipoServicio"></td>
+          <td id="vPrecioUnitario"></td>
+          <td id="vCantidad"></td>
+          <td id="vTotal"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button id="confirmarRegistro">✅ Confirmar y Registrar</button>
+    <a href="http//:index.html">INICIO</a>
+  </div>
+
+  <p id="status"></p>
+
+  <script>
+      
+    const tiendaSelect = document.getElementById('tienda');
     const serieInput = document.getElementById('serie');
 
     const formatos = {
@@ -176,7 +520,10 @@ const tiendaSelect = document.getElementById('tienda');
       'BODEGA AURRERA': 'WA'
     };
 
-
+    tiendaSelect.addEventListener('change', function () {
+      const valor = this.value;
+      serieInput.value = formatos[valor] || '';
+    });
 
     const detInput = document.getElementById('det');
     const sucursalInput = document.getElementById('descripcion');
@@ -716,94 +1063,90 @@ const tiendaSelect = document.getElementById('tienda');
   '2108': 'WA KALA 2108',
   '2505': 'WA ANILLO VIAL 2505'
     };
-    
-    
 
-// Fecha automática
-document.getElementById("fecha").value = new Date().toISOString().split("T")[0];
+      const hoy = new Date().toISOString().split('T')[0];
+      document.getElementById('fechaHoy').value = hoy;
 
-function agregarPartida() {
-  let tbody = document.querySelector("#tablaPartidas tbody");
-  let fila = document.createElement("tr");
-  fila.innerHTML = `
-    <td><input type="text" name="descripcion[]" required></td>
-    <td><input type="number" name="cantidad[]" min="1" value="1" oninput="calcularImporte(this)" required></td>
-    <td><input type="number" name="precio[]" min="0" step="0.01" value="0" oninput="calcularImporte(this)" required></td>
-    <td><input type="number" name="importe[]" readonly></td>
-    <td><button type="button" onclick="eliminarPartida(this)">❌</button></td>
-  `;
-  tbody.appendChild(fila);
-}
-
-function calcularImporte(input) {
-  let fila = input.closest("tr");
-  let cantidad = parseFloat(fila.querySelector('input[name="cantidad[]"]').value) || 0;
-  let precio = parseFloat(fila.querySelector('input[name="precio[]"]').value) || 0;
-  fila.querySelector('input[name="importe[]"]').value = (cantidad * precio).toFixed(2);
-}
-
-function eliminarPartida(boton) {
-  boton.closest("tr").remove();
-}
-
-function mostrarPreview() {
-  let formData = new FormData(document.getElementById("facturaForm"));
-  let html = `<p><strong>Solicitante:</strong> ${formData.get("nombre")} (${formData.get("puesto")})</p>`;
-  html += `<p><strong>Tienda:</strong> ${formData.get("tienda")} - ${formData.get("sucursal")}</p>`;
-  html += `<p><strong>Serie:</strong> ${formData.get("serie")}</p>`;
-  html += `<p><strong>Fecha:</strong> ${formData.get("fecha")}</p>`;
-  
-  html += `<table><tr><th>Descripción</th><th>Cantidad</th><th>Precio</th><th>Importe</th></tr>`;
-  document.querySelectorAll("#tablaPartidas tbody tr").forEach(tr => {
-    let desc = tr.querySelector('input[name="descripcion[]"]').value;
-    let cant = tr.querySelector('input[name="cantidad[]"]').value;
-    let precio = tr.querySelector('input[name="precio[]"]').value;
-    let importe = tr.querySelector('input[name="importe[]"]').value;
-    html += `<tr><td>${desc}</td><td>${cant}</td><td>${precio}</td><td>${importe}</td></tr>`;
-  });
-  html += `</table>`;
-
-  document.getElementById("previewContent").innerHTML = html;
-  document.getElementById("previewFactura").style.display = "block";
-}
-
-function ocultarPreview() {
-  document.getElementById("previewFactura").style.display = "none";
-}
-
-// Enviar a Google Sheets
-document.getElementById("facturaForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  let formData = new FormData(this);
-  
-  let data = {};
-  formData.forEach((value, key) => {
-    if (data[key]) {
-      if (!Array.isArray(data[key])) data[key] = [data[key]];
-      data[key].push(value);
-    } else {
-      data[key] = value;
-    }
-  });
-
-  try {
-    let response = await fetch(API_URL, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" }
+    detInput.addEventListener('input', function () {
+      const codigo = this.value.trim();
+      sucursalInput.value = tiendas[codigo] || '';
     });
-    let result = await response.json();
-    alert("Factura registrada correctamente en Google Sheets ✅");
-    this.reset();
-    document.getElementById("tablaPartidas").querySelector("tbody").innerHTML = "";
-  } catch (error) {
-    alert("Error al enviar la factura ❌");
-    console.error(error);
-  }
-});
-    
-    
-</script>
 
-</body>
-</html>
+    const form = document.getElementById('SolicitudesFacturas');
+    const status = document.getElementById('status');
+    const vistaFactura = document.getElementById('vistaFactura');
+    const confirmarBtn = document.getElementById('confirmarRegistro');
+
+    let datosTemp = {};
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const precio = parseFloat(formData.get('precioUnitario'));
+      const cantidad = parseInt(formData.get('cantidad'));
+      const total = (precio * cantidad).toFixed(2);
+
+      datosTemp = {
+        nombre: formData.get('nombre'),
+        puesto: formData.get('puesto'),
+        tienda: formData.get('tienda'),
+        sucursal: formData.get('sucursal'),
+        determinante: formData.get('determinante'),
+        serie: formData.get('serie'),
+        descripcion: formData.get('descripcion'),
+        fechaHoy: formData.get('fechaHoy'),
+        startDate: formData.get('startDate'),
+        endDate: formData.get('endDate'),
+        tipoServicio: formData.get('tipoServicio'),
+        precioUnitario: precio.toFixed(2),
+        cantidad: cantidad,
+        total: total
+      };
+
+      document.getElementById('vNombre').textContent = datosTemp.nombre;
+      document.getElementById('vPuesto').textContent = datosTemp.puesto;
+      document.getElementById('vTienda').textContent = datosTemp.tienda;
+      document.getElementById('vSucursal').textContent = datosTemp.sucursal;
+      document.getElementById('vDeterminante').textContent = datosTemp.determinante;
+      document.getElementById('vSerie').textContent = datosTemp.serie;
+      document.getElementById('vDescripcion').textContent = datosTemp.descripcion;
+      
+      document.getElementById('vFechaHoy').textContent = datosTemp.fechaHoy;
+      document.getElementById('vStartDate').textContent = datosTemp.startDate;
+      document.getElementById('vEndDate').textContent = datosTemp.endDate;
+      
+      document.getElementById('vTipoServicio').textContent = datosTemp.tipoServicio;
+      document.getElementById('vPrecioUnitario').textContent = `$${datosTemp.precioUnitario}`;
+      document.getElementById('vCantidad').textContent = datosTemp.cantidad;
+      document.getElementById('vTotal').textContent = `$${datosTemp.total}`;
+
+      form.style.display = 'none';
+      vistaFactura.style.display = 'block';
+      status.textContent = '';
+    });
+
+    confirmarBtn.addEventListener('click', function () {
+      const payload = { data: [datosTemp] };
+
+      fetch('https://sheetdb.io/api/v1/gzxxfvgaytsrg', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(response => response.json())
+      .then(result => {
+        status.textContent = "✅ Factura registrada correctamente en Sheets.";
+        confirmarBtn.disabled = true;
+      })
+      .catch(error => {
+        status.textContent = "❌ Error al registrar: " + error;
+      });
+    });
+
+</script>  
+      
+      
+      
+
+  </body>
+  </html>
