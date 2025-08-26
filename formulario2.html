@@ -50,14 +50,7 @@
       box-sizing: border-box;
     }
       
-      .vacio {
-      background-color: #F7F7F7;
-    }
-      
-      .lleno {
-    background-color: #d1fae5; 
-  }
-
+     
 
     input:focus, select:focus {
       outline: none;
@@ -136,9 +129,61 @@
         padding: 8px;
       }
     }
+      
+    header {
+    background: linear-gradient(90deg, #111, #222);
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    border-bottom: 3px solid #22c55e;
+    z-index: 1000;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s;
+  }
+
+  .menu li a:hover {
+    color: #22c55e;
+  }
+
+  main {
+    padding-top: 80px; /* espacio para que no se esconda bajo el header */
+  }     
+      
   </style>
   </head>
   <body>
+    <header>
+    <div class="header-container">
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="formulario1.html">Solicitud de Facturas</a></li>
+        <li><a href="formulario2.html">Registrar folio de liberación</a></li>
+      </ul>
+    </div>
+  </header>  
 
   <h2 style="text-align:center;">Formulario para Solicitud de Factura</h2>
 
@@ -147,14 +192,15 @@
   <fieldset>
     <legend>Datos Personales</legend>
     <label for="puesto">Nombre de solicitante:</label>
-    <input type="text" class="vacio" id="nombre" class="nombre"  name="nombre" placeholder="Nombre" required>
+    <input type="text"  id="nombre" class="nombre"  name="nombre" placeholder="Nombre" required>
 
     <label for="puesto">Puesto:</label>
     <select name="puesto" class="vacio" class="lleno" id="puesto" required>
       <option value="">--Selecciona un puesto--</option>
-      <option value="Gerente">Gerente</option>
-      <option value="Sub Gerente">Sub Gerente</option>
-      <option value="Driver">Driver</option>
+      <option value="Supervisor">Supervisor</option>
+        <option value="Gerente">Gerente</option>  
+        <option value="Sub Gerente">Sub Gerente</option>
+        <option value="Otros">Otros</option>
     </select>
   </fieldset>
    
@@ -163,18 +209,21 @@
   <fieldset>
   <legend>Datos de la Tienda</legend>
     <label for="tienda">Formato:</label>
-    <select name="tienda" class="vacio" id="tienda" required>
+    <select name="tienda"  id="tienda" required>
       <option value="">--Selecciona un formato--</option>
       <option value="WALMART">WALMART</option>
       <option value="WALMART EXPRESS">WALMART EXPRESS</option>
       <option value="BODEGA AURRERA">BODEGA AURRERA</option>
     </select>
 
-    <label for="serie">SERIE:</label>
+    <label for="serie">Serie:</label>
     <input type="text" id="serie" name="serie" placeholder="Serie" required>
+      
+    <label for="folio">Número de Factura:</label>
+    <input type="text" id="folio" name="folio" placeholder="Folio" required>  
 
     <label for="codigo">Determinantes:</label>
-    <input type="text" class="vacio" class="lleno" id="det" name="determinante" placeholder="--Determinante--" required>
+    <input type="text" id="det" name="determinante" placeholder="--Determinante--" required>
 
     <label for="descripcion">Tienda:</label>
     <input type="text" id="descripcion" name="sucursal" placeholder="Sucursal" readonly>
@@ -183,286 +232,20 @@
 
  
   <fieldset>
-  <legend>Datos de la Factura</legend>
+  <legend>Datos de Entrega</legend>
+    <label for="descripcion">Folio de Liberación</label>
+    <input type="text" name="descripcion" placeholder="Folio de Liberación" >
     
+  
     <label for="fechaHoy">Fecha de hoy</label>
     <input type="date" id="fechaHoy" name="fechaHoy" readonly>
 
 
-    <div class="date-row">
-      <div>
-        <label for="startDate">Fecha de inicio</label>
-        <input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required />
-      </div>
-      <div>
-        <label for="endDate">Fecha final</label>
-        <input type="date" class="vacio" id="endDate" name="endDate" placeholder="endDate" required />
-      </div>
-    </div>
+    
   </fieldset>  
   
   
-  <fieldset>
-  <legend>PARTIDA 1</legend>
-<table border="5">
-  <tr>
-    <td>Descripción</td>
-    <td>Fecha</td>
-    <td>Tipo de Servicio</td>
-    <td>Cantidad</td>
-    <td>Precio Unitario</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
-    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
-    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
-    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
-      <option value="">--Selecciona un Servicio--</option>
-      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
-      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
-      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
-      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
-      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
-    </select></td>
-    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
-    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
-  </tr>
-</table>
-</fieldset>
-
-<fieldset>
-  <legend>PARTIDA 2</legend>
-<table border="5">
-  <tr>
-    <td>Descripción</td>
-    <td>Fecha</td>
-    <td>Tipo de Servicio</td>
-    <td>Cantidad</td>
-    <td>Precio Unitario</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
-    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
-    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
-    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
-      <option value="">--Selecciona un Servicio--</option>
-      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
-      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
-      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
-      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
-      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
-    </select></td>
-    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
-    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
-  </tr>
-</table>
-</fieldset>
-
-<fieldset>
-  <legend>PARTIDA 3</legend>
-<table border="5">
-  <tr>
-    <td>Descripción</td>
-    <td>Fecha</td>
-    <td>Tipo de Servicio</td>
-    <td>Cantidad</td>
-    <td>Precio Unitario</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
-    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
-    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
-    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
-      <option value="">--Selecciona un Servicio--</option>
-      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
-      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
-      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
-      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
-      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
-    </select></td>
-    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
-    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
-  </tr>
-</table>
-</fieldset>
-
-<fieldset>
-  <legend>PARTIDA 4</legend>
-<table border="5">
-  <tr>
-    <td>Descripción</td>
-    <td>Fecha</td>
-    <td>Tipo de Servicio</td>
-    <td>Cantidad</td>
-    <td>Precio Unitario</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
-    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
-    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
-    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
-      <option value="">--Selecciona un Servicio--</option>
-      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
-      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
-      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
-      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
-      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
-    </select></td>
-    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
-    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
-  </tr>
-</table>
-</fieldset>
-
-<fieldset>
-  <legend>PARTIDA 5</legend>
-<table border="5">
-  <tr>
-    <td>Descripción</td>
-    <td>Fecha</td>
-    <td>Tipo de Servicio</td>
-    <td>Cantidad</td>
-    <td>Precio Unitario</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
-    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
-    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
-    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
-      <option value="">--Selecciona un Servicio--</option>
-      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
-      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
-      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
-      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
-      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
-    </select></td>
-    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
-    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
-  </tr>
-</table>
-</fieldset>
-
-<fieldset>
-  <legend>PARTIDA 6</legend>
-<table border="5">
-  <tr>
-    <td>Descripción</td>
-    <td>Fecha</td>
-    <td>Tipo de Servicio</td>
-    <td>Cantidad</td>
-    <td>Precio Unitario</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
-    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
-    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
-    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
-      <option value="">--Selecciona un Servicio--</option>
-      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
-      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
-      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
-      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
-      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
-    </select></td>
-    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
-    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
-  </tr>
-</table>
-</fieldset>
-
-<fieldset>
-  <legend>PARTIDA 7</legend>
-<table border="5">
-  <tr>
-    <td>Descripción</td>
-    <td>Fecha</td>
-    <td>Tipo de Servicio</td>
-    <td>Cantidad</td>
-    <td>Precio Unitario</td>
-  </tr>
-  <tr>
-    <td><input type="text" name="descripcion" placeholder="Descripción" ></td>
-    <td><input type="date" class="vacio" id="startDate" name="startDate" placeholder="startDate" required /></td>
-    <td><label for="tipoServicio">TIPO DE SERVICIO:</label>
-    <select name="tipoServicio" class="vacio" class="lleno" id="tipoServicio" required>
-      <option value="">--Selecciona un Servicio--</option>
-      <option value="SPOT - CAMIONETA 750">ZONA A - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - CAMIONETA 750">ZONA B - SPOT - CAMIONETA 750</option>
-      <option value="SPOT - SEDÁN">ZONA A - SPOT - SEDÁN</option>
-      <option value="SPOT - SEDÁN">ZONA B - SPOT - SEDÁN</option>
-      <option value="SPOT - 1.5 TON">ZONA A - SPOT - 1.5 TON</option>
-      <option value="SPOT - 1.5 TON">ZONA B - SPOT - 1.5 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA A - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - 1.5 0 2 TON">ZONA B - MEDIA JORNADA - 1.5 0 2 TON</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA A - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - CAMIONETA 750 KG">ZONA B - MEDIA JORNADA - CAMIONETA 750 KG</option>
-      <option value="MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)">ZONA A - MEDIA JORNADA - EV SEDÁN (ELÉCTRICAS)</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZZONA A - MEDIA JORNADA - SEDÁN</option>
-      <option value="MEDIA JORNADA - SEDÁN">ZONA B - MEDIA JORNADA - SEDÁN</option>
-      <option value="ESTACIONAMIENTOS">ESTACIONAMIENTOS</option>
-    </select></td>
-    <td> <input type="number" class="vacio" class="lleno" name="cantidad" placeholder="Cantidad" step="1" required></td>
-    <td> <input type="number" class="vacio" class="lleno" id="precio" name="precioUnitario" placeholder="Precio Unitario" step="$0.01" required</td>
-  </tr>
-</table>
-</fieldset>
-      
     
-      
   </section> 
   <button type="submit">Vista Previa</button>
   </form>
@@ -477,28 +260,19 @@
     <p><strong>Sucursal:</strong> <span id="vSucursal"></span></p>
     <p><strong>Determinante:</strong> <span id="vDeterminante"></span></p>
     <p><strong>Serie:</strong> <span id="vSerie"></span></p>
+    <p><strong>Folio:</strong> <span id="vFolio"></span></p>  
 
     <table>
       <thead>
         <tr>
-          <th>Descripción</th>
-          <th>Fecha de inicio</th>
-          <th>Fecha final</th>
-          <th>Tipo de Servicio</th>
-          <th>Precio Unitario</th>
-          <th>Cantidad</th>
-          <th>Total</th>
+          <th>Folio de Liberación</th>
+ 
         </tr>
       </thead>
       <tbody>
         <tr>
           <td id="vDescripcion"></td>
-          <td id="vStartDate"></td>
-          <td id="vEndDate"></td>
-          <td id="vTipoServicio"></td>
-          <td id="vPrecioUnitario"></td>
-          <td id="vCantidad"></td>
-          <td id="vTotal"></td>
+     
         </tr>
       </tbody>
     </table>
@@ -1093,6 +867,7 @@
         sucursal: formData.get('sucursal'),
         determinante: formData.get('determinante'),
         serie: formData.get('serie'),
+        folio: formData.get('folio'),  
         descripcion: formData.get('descripcion'),
         fechaHoy: formData.get('fechaHoy'),
         startDate: formData.get('startDate'),
@@ -1109,16 +884,11 @@
       document.getElementById('vSucursal').textContent = datosTemp.sucursal;
       document.getElementById('vDeterminante').textContent = datosTemp.determinante;
       document.getElementById('vSerie').textContent = datosTemp.serie;
+      document.getElementById('vFolio').textContent = datosTemp.folio;    
       document.getElementById('vDescripcion').textContent = datosTemp.descripcion;
       
       document.getElementById('vFechaHoy').textContent = datosTemp.fechaHoy;
-      document.getElementById('vStartDate').textContent = datosTemp.startDate;
-      document.getElementById('vEndDate').textContent = datosTemp.endDate;
       
-      document.getElementById('vTipoServicio').textContent = datosTemp.tipoServicio;
-      document.getElementById('vPrecioUnitario').textContent = `$${datosTemp.precioUnitario}`;
-      document.getElementById('vCantidad').textContent = datosTemp.cantidad;
-      document.getElementById('vTotal').textContent = `$${datosTemp.total}`;
 
       form.style.display = 'none';
       vistaFactura.style.display = 'block';
@@ -1128,7 +898,7 @@
     confirmarBtn.addEventListener('click', function () {
       const payload = { data: [datosTemp] };
 
-      fetch('https://sheetdb.io/api/v1/gzxxfvgaytsrg', {
+      fetch('https://sheetdb.io/api/v1/xuazn1pljoo9c', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
